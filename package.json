@@ -1,0 +1,29 @@
+{
+  "name": "period",
+  "version": "1.0.0",
+  "description": "Allows for various definitions of historical & prospective periods. A period is defined as range of two Date objects, usually a start-/fromDate to an (a) end/toDate.",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "test": "npm run lint"
+  },
+  "keywords": [
+    "time",
+    "date",
+    "period",
+    "calendar",
+    "startdate",
+    "enddate",
+    "fromdate",
+    "todate",
+    "date-fns"
+  ],
+  "author": "ttzschach",
+  "license": "ISC",
+  "dependencies": {
+    "date-fns": "^2.30.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.2"
+  }
+}
