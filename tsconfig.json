@@ -5,6 +5,7 @@
     "strictNullChecks": true,
     "removeComments": true,
     "preserveConstEnums": true,
+    "moduleResolution": "node",
     "sourceMap": true,
     "lib": [
       "ESNExt"
