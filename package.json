@@ -1,6 +1,6 @@
 {
   "name": "@ttzschach/period",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Allows for various definitions of historical & prospective periods. A period is defined as range of two Date objects, usually a from-/startDate and a(n) to-/endDate.",
   "type": "module",
   "main": "dist/index.js",
