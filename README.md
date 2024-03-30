@@ -1,15 +1,24 @@
 # @ttzschach/period
 
-Date utility library to help define periods as a pair of two Date objects - a from- and toDate (alias: start-/endDate).
+Date utility library to help define periods as a pair of two Date objects - from-/toDate.
 Allows for both historic & futurisitic Date definitions, thus creating periods that range from the past into the future.
 
 ````js
-import { getPeriodDates, Period } from "@ttzschach/period";
+import { getPeriodDates, Period, PeriodDates } from "@ttzschach/period";
 
-const yesterdayToNow: Period = { from: { TimeUnit.DAY, timeUnitCount: 1, timeDirection: TimeDirection.PAST } }; // 'to' defaults to the current Date (now)
+
+const yesterdayToNow: Period = {
+    from: {
+        timeUnit: TimeUnit.DAY,
+        timeUnitCount: 1,
+        timeDirection: TimeDirection.PAST
+    }
+    // 'to' defaults to the current Date (now) in this example
+};
+
 const resolvedPeriodDates: PeriodDates | undefined = getPeriodDates(yesterdayToNow);
 // ^
-// export interface PeriodDates {
+// interface PeriodDates {
 //     from: Date;
 //     to: Date;
 // }
@@ -26,14 +35,16 @@ You may find the default values inside **src/model.ts const PeriodDefaults**.
 
 ## Installation (WIP)
 
+To be released on npmjs.com
+
 ````bash
 npm install @ttzschach/period
 ````
 
-Alternatively:
+Alternatively :
 
 ````bash
-git@github.com:timmtzschach/period.git && cd ./period/ && npm i && cd ../ && npm i --save-dev ./period/
+mkdir repos && cd ./repos/ && git@github.com:timmtzschach/period.git && cd ./period/ && npm i && cd ../../ && npm i --save-dev ./period/
 ````
 
 ## Uninstallation
