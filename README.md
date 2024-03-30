@@ -33,12 +33,13 @@ npm install @ttzschach/period
 
 Alternatively:
 
-`````bash
+````bash
 git@github.com:timmtzschach/period.git && cd ./period/ && npm i && cd ../ && npm i --save-dev ./period/
 ````
 
-Uninstalling
-`````bash
+## Uninstallation
+
+````bash
 npm uninstall @ttzschach/period
 ````
 
