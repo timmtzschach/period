@@ -1,8 +1,7 @@
 # @ttzschach/period
 
-## Period/Date-pair utility library to help define periods which are defined as a pair of two date objects - a from- and toDate (start-/endDate)
-
-## It allows for both historic and futurisitic Date definitions thus creating periods that range from the past into the future
+Date utility library to help define periods as a pair of two Date objects - a from- and toDate (alias: start-/endDate).
+Allows for both historic & futurisitic Date definitions, thus creating periods that range from the past into the future.
 
 ````js
 import { getPeriodDates, Period } from "@ttzschach/period";
