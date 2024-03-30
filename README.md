@@ -41,7 +41,7 @@ To be released on npmjs.com
 npm install @ttzschach/period
 ````
 
-Alternatively :
+Alternatively (start from your node projects directory):
 
 ````bash
 mkdir repos && cd ./repos/ && git@github.com:timmtzschach/period.git && cd ./period/ && npm i && cd ../../ && npm i --save-dev ./period/
