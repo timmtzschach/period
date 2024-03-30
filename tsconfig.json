@@ -1,21 +1,27 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
     "sourceMap": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "noImplicitAny": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+    "preserveConstEnums": true,
+    "declaration": true,
+    "rootDir": "src",
     "lib": [
-      "ESNExt"
+      "ES2022",
+      "ES2020.Intl",
+      "DOM",
     ],
     "outDir": "./dist"
   },
   "include": [
-    "src/**/*"
+    "src/**/*.ts"
   ],
-  "exclude": [
-    "**/*.spec.ts"
-  ]
 }

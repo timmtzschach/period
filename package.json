@@ -1,11 +1,18 @@
 {
-  "name": "period",
-  "version": "1.0.0",
-  "description": "Allows for various definitions of historical & prospective periods. A period is defined as range of two Date objects, usually a start-/fromDate to an (a) end/toDate.",
-  "main": "index.js",
+  "name": "@ttzschach/period",
+  "version": "0.0.1",
+  "description": "Allows for various definitions of historical & prospective periods. A period is defined as range of two Date objects, usually a from-/startDate and a(n) to-/endDate.",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.m.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
   "scripts": {
-    "build": "npx tsc",
-    "test": "npm run lint"
+    "build": "rimraf -rf dist/ && npx tsc"
   },
   "keywords": [
     "time",
@@ -16,14 +23,15 @@
     "enddate",
     "fromdate",
     "todate",
-    "date-fns"
+    "datepair"
   ],
   "author": "ttzschach",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "date-fns": "^2.30.0"
+    "date-fns": "^3.6.0"
   },
   "devDependencies": {
-    "typescript": "^5.3.2"
+    "rimraf": "^5.0.5",
+    "typescript": "^5.4.3"
   }
 }

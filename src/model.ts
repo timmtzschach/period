@@ -1,11 +1,18 @@
 import {
     subMilliseconds, subSeconds, subMinutes, subHours, subDays, subWeeks, subMonths, subQuarters, subYears,
-    addMilliseconds, addSeconds, addMinutes, addHours, addDays, addWeeks, addMonths, addQuarters, addYears, endOfSecond, endOfMinute, endOfHour, endOfDay, endOfWeek, endOfMonth, endOfQuarter, endOfYear, startOfSecond, startOfMinute, startOfHour, startOfDay, startOfWeek, startOfMonth, startOfQuarter, startOfYear
+    addMilliseconds, addSeconds, addMinutes, addHours, addDays, addWeeks, addMonths, addQuarters, addYears,
+    endOfSecond, endOfMinute, endOfHour, endOfDay, endOfWeek, endOfMonth, endOfQuarter, endOfYear,
+    startOfSecond, startOfMinute, startOfHour, startOfDay, startOfWeek, startOfMonth, startOfQuarter, startOfYear
 } from "date-fns";
 
+export interface PeriodDates {
+    from: Date;
+    to: Date;
+}
+
 export enum PeriodDateType {
-    FROM = 'FROM',
-    TO = 'TO',
+    FROM = 'from',
+    TO = 'to',
 }
 
 export enum TimeUnit {
@@ -25,11 +32,13 @@ export enum TimeDirection {
     FUTURE,
 }
 
+// Enum in order to be extensible in the future
 export enum RelativeFromStartType {
     NOW,
     TO,
 }
 
+// Enum in order to be extensible in the future
 export enum RelativeToStartType {
     NOW,
     FROM,
@@ -55,21 +64,21 @@ export enum RelativeEndType {
 }
 
 export interface BasePeriod {
-    periodDateType: PeriodDateType;
+    // periodDateType: PeriodDateType;
     timeUnit?: TimeUnit;
+    timeUnitCount?: number; // DEFAULT based on timeDirection && timeUnit
     timeDirection?: TimeDirection;
-    periodCount?: number; // DEFAULT based on timeDirection && timeUnit
     dateFnsStartEndWeekOptions?: Parameters<typeof endOfWeek | typeof startOfWeek>[1];
 }
 
 export interface FromPeriod extends BasePeriod {
-    periodDateType: PeriodDateType.FROM;
+    // periodDateType: PeriodDateType.FROM;
     relativeStartType?: RelativeFromStartType; // default: RelativeFromStartType.NOW
     relativeEndType?: RelativeEndType;
 }
 
 export interface ToPeriod extends BasePeriod {
-    periodDateType: PeriodDateType.TO;
+    // periodDateType: PeriodDateType.TO;
     relativeStartType?: RelativeToStartType; // default: RelativeToStartType.NOW
     relativeEndType?: RelativeEndType;
 }
@@ -83,20 +92,6 @@ export type Period = (
     }
 );
 
-export type StoreablePeriod = (
-    | { [PeriodDateType.FROM]: number; }
-    | { [PeriodDateType.TO]: number; }
-    | {
-        [PeriodDateType.FROM]: number;
-        [PeriodDateType.TO]: number;
-    }
-);
-export type JSONPeriod = StoreablePeriod;
-
-export interface PeriodDates {
-    from: Date;
-    to: Date;
-}
 
 type PeriodOmits = 'periodDateType' | 'relativeEndType' | 'dateFnsStartEndWeekOptions';
 type ReqPeriod = Required<Omit<FromPeriod | ToPeriod, PeriodOmits>>;
@@ -116,7 +111,7 @@ export const PeriodDefaults: {
         [PeriodDateType.FROM]: RelativeFromStartType.NOW,
         [PeriodDateType.TO]: RelativeToStartType.NOW
     },
-    periodCount: {
+    timeUnitCount: {
         [PeriodDateType.FROM]: 1,
         [PeriodDateType.TO]: 0,
     },

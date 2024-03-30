@@ -1,17 +1,17 @@
-import { Period, PeriodDates, PeriodDateType, StoreablePeriod, FromPeriod, ToPeriod, PeriodDateFnsMap, RelativeToStartType, RelativeFromStartType, PeriodDefaults, RelativeEndTypeDateFnsMap } from "./model";
+import { Period, PeriodDateType, FromPeriod, ToPeriod, PeriodDateFnsMap, RelativeToStartType, RelativeFromStartType, PeriodDefaults, RelativeEndTypeDateFnsMap, PeriodDates } from "./model.js";
 
-export function resolvePeriod(period: FromPeriod | ToPeriod, date: Date): Date {
-    if (period.periodCount != 0) {
-        const periodTypeDateFn = PeriodDateFnsMap[period.timeUnit ?? (PeriodDefaults.timeUnit[period.periodDateType])][period.timeDirection ?? (PeriodDefaults.timeDirection[period.periodDateType])];
-        date = periodTypeDateFn(date, period.periodCount ?? (PeriodDefaults.periodCount[period.periodDateType]));
+function resolvePeriod(period: FromPeriod | ToPeriod, anchorDate: Date, periodDateType: PeriodDateType): Date {
+    if (period.timeUnitCount != 0) {
+        const periodTypeDateFn = PeriodDateFnsMap[period.timeUnit ?? (PeriodDefaults.timeUnit[periodDateType])][period.timeDirection ?? (PeriodDefaults.timeDirection[periodDateType])];
+        anchorDate = periodTypeDateFn(anchorDate, period.timeUnitCount ?? (PeriodDefaults.timeUnitCount[periodDateType]));
     }
 
     if (period.relativeEndType) {
         const relativeEndTypeDateFn = RelativeEndTypeDateFnsMap[period.relativeEndType];
-        date = relativeEndTypeDateFn(date, period.dateFnsStartEndWeekOptions);
+        anchorDate = relativeEndTypeDateFn(anchorDate, period.dateFnsStartEndWeekOptions);
     }
 
-    return date;
+    return anchorDate;
 }
 
 export function getPeriodDates(period: Period): PeriodDates | undefined {
@@ -21,6 +21,7 @@ export function getPeriodDates(period: Period): PeriodDates | undefined {
     if (PeriodDateType.FROM in period) {
         from = period[PeriodDateType.FROM];
     }
+
     if (PeriodDateType.TO in period) {
         to = period[PeriodDateType.TO];
     }
@@ -33,7 +34,7 @@ export function getPeriodDates(period: Period): PeriodDates | undefined {
         }
 
         let resolvedTo: Date = to.relativeStartType === RelativeToStartType.FROM ? new Date(from.getTime()) : new Date();
-        resolvedTo = resolvePeriod(to, resolvedTo);
+        resolvedTo = resolvePeriod(to, resolvedTo, PeriodDateType.TO);
         return { from, to: resolvedTo };
     } else if (to instanceof Date) {
         if (from instanceof Date) {
@@ -43,13 +44,14 @@ export function getPeriodDates(period: Period): PeriodDates | undefined {
         }
 
         let resolvedFrom: Date = from?.relativeStartType === RelativeFromStartType.TO ? new Date(to.getTime()) : new Date();
-        resolvedFrom = resolvePeriod(from, resolvedFrom);
+        resolvedFrom = resolvePeriod(from, resolvedFrom, PeriodDateType.FROM);
         return { from: resolvedFrom, to };
     } else if (from) {
         if (!to) {
             let resolvedFrom: Date = new Date();
-            resolvedFrom = resolvePeriod(from, resolvedFrom);
-            return { from: resolvedFrom, to: new Date() };
+            to = new Date(resolvedFrom.getTime());
+            resolvedFrom = resolvePeriod(from, resolvedFrom, PeriodDateType.FROM);
+            return { from: resolvedFrom, to };
         }
         // resolve both from & to
         if (from.relativeStartType === RelativeFromStartType.TO && to.relativeStartType === RelativeToStartType.FROM) {
@@ -57,55 +59,28 @@ export function getPeriodDates(period: Period): PeriodDates | undefined {
         }
         if (from.relativeStartType === RelativeFromStartType.TO) {
             let resolvedTo: Date = new Date();
-            resolvedTo = resolvePeriod(to, resolvedTo);
+            resolvedTo = resolvePeriod(to, resolvedTo, PeriodDateType.TO);
             let resolvedFrom: Date = new Date(resolvedTo.getTime());
-            resolvedFrom = resolvePeriod(from, resolvedFrom);
+            resolvedFrom = resolvePeriod(from, resolvedFrom, PeriodDateType.FROM);
             return { from: resolvedFrom, to: resolvedTo };
         } else if (to.relativeStartType === RelativeToStartType.FROM) {
             let resolvedFrom: Date = new Date();
-            resolvedFrom = resolvePeriod(from, resolvedFrom);
+            resolvedFrom = resolvePeriod(from, resolvedFrom, PeriodDateType.FROM);
             let resolvedTo: Date = new Date(resolvedFrom.getTime());
-            resolvedTo = resolvePeriod(to, resolvedTo);
+            resolvedTo = resolvePeriod(to, resolvedTo, PeriodDateType.TO);
             return { from: resolvedFrom, to: resolvedTo };
         }
         else {
             // no dependency between the two
-            const resolvedFrom = resolvePeriod(from, new Date());
-            const resolvedTo = resolvePeriod(to, new Date());
+            const resolvedFrom = resolvePeriod(from, new Date(), PeriodDateType.FROM);
+            const resolvedTo = resolvePeriod(to, new Date(), PeriodDateType.TO);
             return { from: resolvedFrom, to: resolvedTo };
         }
     } else if (to) {
         let resolvedTo: Date = new Date();
-        resolvedTo = resolvePeriod(to, new Date());
+        resolvedTo = resolvePeriod(to, new Date(), PeriodDateType.TO);
         return { from: new Date(), to: resolvedTo };
     }
 
     return undefined;
 }
-
-/**
- * Retrieves a JSON conform object for a given @Period
- * Replaces Date objects inside a period (e.g. for Datepicker periods that consist of two Date objects)
- *
- * A possible use case might be storage related as class instances aren't supported.
- *
- * @param period - the period to make JSON safe
- * @returns the JSON conform Period @StoreablePeriod
- */
-// export function getStoreablePeriod(period: Period): StoreablePeriod {
-//     return Object.entries(period).reduce<StoreablePeriod>((storeablePeriod: StoreablePeriod, [periodKey, periodValue]) => {
-//         storeablePeriod[periodKey] = periodValue instanceof Date ? periodValue.getTime() : periodValue;
-//         return storeablePeriod;
-//     }, {} as StoreablePeriod);
-// }
-
-// export function getPeriodFromStoreablePeriod(storeablePeriod: StoreablePeriod): Period {
-//     return Object.entries(storeablePeriod).reduce<Period>((period: Period, [periodKey, periodValue]) => {
-//         period[periodKey] = (periodKey in PeriodDateType && typeof periodValue === 'number'
-//             ? new Date(periodValue)
-//             : periodValue
-//         );
-
-//         return period;
-//     }, {} as Period)
-// }
