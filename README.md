@@ -1,6 +1,6 @@
 # @ttzschach/period
 
-Date utility library to help define periods as a pair of two Date objects - from-/toDate.
+Date utility library to help define periods as a pair of two Date objects - from-/toDate.\
 Allows for both historic & futurisitic Date definitions, thus creating periods that range from the past into the future.
 
 ````js
@@ -30,7 +30,7 @@ if (resolvedPeriodDates) {
 }
 ````
 
-As most properties are optional the defaults are defined to yesterday (fromDate) to now (toDate).
+As most properties are optional the defaults are defined to yesterday (fromDate) to now (toDate).\
 You may find the default values inside **src/model.ts const PeriodDefaults**.
 
 ## Installation (WIP)
