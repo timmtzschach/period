@@ -1,7 +1,7 @@
 {
   "name": "@ttzschach/period",
   "version": "1.0.0",
-  "description": "Date util library that allows for various definitions of historical & prospective periods (pair of two Date objects).",
+  "description": "Date util library that allows for various definitions of historical & prospective periods (pair of two Date objects - from & to).",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
