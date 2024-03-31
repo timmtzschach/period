@@ -34,12 +34,10 @@ if (resolvedPeriodDates) {
 }
 ````
 
-As most properties are optional the defaults are defined as yesterday for the "from" date and today for the "to" date.\
-You may find the default values inside **src/model.ts const PeriodDefaults**.
+As most properties are optional the defaults are defined to resolve yesterday for the "from" date and today for the "to" date.\
+You may find the defaults inside **./src/model.ts**.
 
-## Installation (WIP)
-
-To be released on npmjs.com
+## Installation
 
 ````bash
 npm install @ttzschach/period
