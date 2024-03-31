@@ -28,7 +28,7 @@ const resolvedPeriodDates: PeriodDates | undefined = getPeriodDates(yesterdayToN
 // }
 
 if (resolvedPeriodDates) {
-    console.log(getPeriodDates(yesterdayToNow));
+    console.log(resolvedPeriodDates);
     // assuming getPeriodDates was executed roughly at 2024-03-30-12:00:00 it would output the following:
     // Object { from: 2024-03-29-12:00:00, to: 2024-03-31-12:00:00 }
 }
