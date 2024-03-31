@@ -11,12 +11,12 @@ const yesterdayToTomorrow: Period = {
     from: {
         timeUnit: TimeUnit.DAY,
         timeUnitCount: 1,
-        timeDirection: TimeDirection.PAST
-    }
-    to {
+        timeDirection: TimeDirection.PAST,
+    },
+    to: {
         timeUnit: TimeUnit.DAY,
-        timeUnitCount: 1
-        timeDirection: TimeDirection.FUTURE
+        timeUnitCount: 1,
+        timeDirection: TimeDirection.FUTURE,
     }
 };
 
