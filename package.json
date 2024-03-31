@@ -1,7 +1,7 @@
 {
   "name": "@ttzschach/period",
   "version": "1.0.0",
-  "description": "Allows for various definitions of historical & prospective periods. A period is defined as range of two Date objects, usually a from-/startDate and a(n) to-/endDate.",
+  "description": "Date util library that allows for various definitions of historical & prospective periods (pair of two Date objects).",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,7 +11,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rimraf -rf dist/ && npx tsc"
+    "build": "rimraf -rf dist/* --glob && npx tsc"
   },
   "keywords": [
     "time",

@@ -92,7 +92,6 @@ export type Period = (
     }
 );
 
-
 type PeriodOmits = 'periodDateType' | 'relativeEndType' | 'dateFnsStartEndWeekOptions';
 type ReqPeriod = Required<Omit<FromPeriod | ToPeriod, PeriodOmits>>;
 type ReqFromPeriod = Required<Omit<FromPeriod, PeriodOmits>>;

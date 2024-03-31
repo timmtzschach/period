@@ -1,19 +1,23 @@
 # @ttzschach/period
 
 Date utility library to help define periods as a pair of two Date objects - from-/toDate.\
-Allows for both historic & futurisitic Date definitions, thus creating periods that range from the past into the future.
+Allows for historic, prospective and even mixed Period definitions, thus creating periods that range from the past into the future.
 
 ````js
 import { getPeriodDates, Period, PeriodDates } from "@ttzschach/period";
 
 
-const yesterdayToNow: Period = {
+const yesterdayToTomorrow: Period = {
     from: {
         timeUnit: TimeUnit.DAY,
         timeUnitCount: 1,
         timeDirection: TimeDirection.PAST
     }
-    // 'to' defaults to the current Date (now) in this example
+    to {
+        timeUnit: TimeUnit.DAY,
+        timeUnitCount: 1
+        timeDirection: TimeDirection.FUTURE
+    }
 };
 
 const resolvedPeriodDates: PeriodDates | undefined = getPeriodDates(yesterdayToNow);
@@ -26,7 +30,7 @@ const resolvedPeriodDates: PeriodDates | undefined = getPeriodDates(yesterdayToN
 if (resolvedPeriodDates) {
     console.log(getPeriodDates(yesterdayToNow));
     // assuming getPeriodDates was executed roughly at 2024-03-30-12:00:00 it would output the following:
-    // Object { from: 2024-03-29-12:00:00, to: 2024-03-30-12:00:00 }
+    // Object { from: 2024-03-29-12:00:00, to: 2024-03-31-12:00:00 }
 }
 ````
 
@@ -39,12 +43,6 @@ To be released on npmjs.com
 
 ````bash
 npm install @ttzschach/period
-````
-
-Alternatively (start from your node projects directory):
-
-````bash
-mkdir repos && cd ./repos/ && git@github.com:timmtzschach/period.git && cd ./period/ && npm i && cd ../../ && npm i --save-dev ./period/
 ````
 
 ## Uninstallation
