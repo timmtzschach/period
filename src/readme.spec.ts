@@ -1,11 +1,5 @@
-# @ttzschach/period
-
-Date utility library to help define periods as a pair of two Date objects consisting of a "from" & "to" date.\
-Allows for historic, prospective and even mixed Period definitions, thus creating periods that range from the past into the future.
-
-````js
-import { getPeriodDates, Period, PeriodDates, TimeDirection, TimeUnit, RelativeToStartType } from "@ttzschach/period";
-
+import { Period, PeriodDates, RelativeToStartType, TimeDirection, TimeUnit } from "./model.js";
+import { getPeriodDates } from "./service.js";
 
 const fromYesterdayToTomorrow: Period = {
     from: {
@@ -47,23 +41,3 @@ if (resolvedFrom1WeekBackToAdd3Days) {
     console.log(resolvedFrom1WeekBackToAdd3Days);
     // Object { from: 2024-03-23-12:00:00, to: 2024-03-26-12:00:00 }
 }
-````
-
-As most properties are optional the defaults are defined to resolve yesterday for the "from" date and today for the "to" date.\
-You may find the defaults inside **./src/model.ts**.
-
-## Installation
-
-````bash
-npm install @ttzschach/period
-````
-
-## Uninstallation
-
-````bash
-npm uninstall @ttzschach/period
-````
-
-## License
-
-MIT
